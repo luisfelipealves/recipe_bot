@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:logging/logging.dart'; // Import logging
 import '../services/auth_service.dart';
+import 'home_screen.dart';
+
+// Se você tiver uma tela de registro, importe-a aqui também:
+// import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +15,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // Get a logger instance for this screen
+  final Logger _log = Logger('LoginScreen');
+
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -29,6 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void _navigateToHomeScreen() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    );
+  }
+
   Future<void> _signInWithEmailAndPassword() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -37,11 +51,15 @@ class _LoginScreenState extends State<LoginScreen> {
         _errorMessage = null;
       });
       try {
+        _log.fine(
+            'Attempting to sign in with email: $_email'); // Example of a different log level
         await _authService.signInWithEmailAndPassword(_email, _password);
         if (mounted) {
-          /* Opcional */
+          _log.info(
+              'Sign in successful for email: $_email, navigating to home.');
+          _navigateToHomeScreen();
         }
-      } catch (e) {
+      } catch (e, s) { // Capture stack trace
         String message = "Falha ao entrar. Verifique suas credenciais.";
         if (e is FirebaseAuthException) {
           if (e.code == 'user-not-found') {
@@ -56,7 +74,8 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         setState(() {
           _errorMessage = message;
-          print("Login Error (Email/Password): $e");
+          // Use a more appropriate level like severe or warning for errors
+          _log.severe("Login Error (Email/Password): $message", e, s);
         });
       } finally {
         if (mounted) {
@@ -74,14 +93,17 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = null;
     });
     try {
+      _log.fine('Attempting Google Sign-In.');
       await _authService.signInWithGoogle();
       if (mounted) {
-        /* Opcional */
+        _log.info('Google Sign-In successful, navigating to home.');
+        _navigateToHomeScreen();
       }
-    } catch (e) {
+    } catch (e, s) { // Capture stack trace
       setState(() {
         _errorMessage = "Falha ao entrar com Google. Tente novamente.";
-        print("Login Error (Google): $e");
+        // Use a more appropriate level like severe or warning for errors
+        _log.severe("Login Error (Google): $_errorMessage", e, s);
       });
     } finally {
       if (mounted) {
@@ -93,6 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateToRegisterScreen() {
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(builder: (context) => const RegisterScreen()),
+    // );
+    _log.info('Navigate to Register Screen (TODO) button pressed.');
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Navegar para tela de Registro (TODO)')),
     );
@@ -103,8 +129,16 @@ class _LoginScreenState extends State<LoginScreen> {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
     final googleLogoAsset = isDarkMode
-        ? 'assets/images/android_dark_rd_na@1x.png'
-        : 'assets/images/android_light_rd_na@1x.png';
+        ? 'assets/images/google_logo_dark.png'
+        : 'assets/images/google_logo_light.png';
+
+    const int alphaVal80 = 204;
+    const int alphaVal70 = 179;
+    const int alphaVal60 = 153;
+    const int alphaVal30 = 77;
+
+    _log.finest(
+        'LoginScreen build method called.'); // Example of finest for very detailed logs
 
     return Scaffold(
       body: Center(
@@ -122,18 +156,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: theme.colorScheme.primary,
                 ),
                 const SizedBox(height: 16),
-                Text('Recipe Bot',
+                Text(
+                  'Recipe Bot',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineMedium?.copyWith(
-                    color: theme.colorScheme.onBackground,
+                    color: theme.colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text('Seu assistente de receitas inteligente.',
+                Text(
+                  'Seu assistente de receitas inteligente.',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    color: theme.colorScheme.onSurface.withAlpha(alphaVal70),
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -161,6 +197,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                   onSaved: (value) => _email = value!,
+                  onChanged: (value) =>
+                      _log.finest('Email field changed: $value'), // Example
                 ),
                 const SizedBox(height: 16),
 
@@ -184,6 +222,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         setState(() {
                           _isPasswordVisible = !_isPasswordVisible;
+                          _log.info(
+                              'Password visibility toggled to: $_isPasswordVisible');
                         });
                       },
                     ),
@@ -199,6 +239,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                   onSaved: (value) => _password = value!,
+                  onChanged: (value) =>
+                      _log.finest(
+                          'Password field changed.'), // Example (don't log actual password)
                 ),
                 const SizedBox(height: 24),
 
@@ -240,8 +283,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Text(
                         'OU',
-                        style: TextStyle(color: theme.colorScheme.onSurface
-                            .withOpacity(0.6)),
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withAlpha(
+                              alphaVal60),
+                        ),
                       ),
                     ),
                     const Expanded(child: Divider(thickness: 1)),
@@ -255,17 +300,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   icon: Image.asset(
                     googleLogoAsset,
                     height: 20.0,
+                    errorBuilder: (context, error, stackTrace) {
+                      _log.warning('Failed to load Google logo asset.', error,
+                          stackTrace);
+                      return const Icon(Icons.login, size: 20);
+                    },
                   ),
                   label: Text(
                     'Entrar com Google',
                     style: TextStyle(
-                      color: theme.colorScheme.onSurface.withOpacity(0.8),
+                      color: theme.colorScheme.onSurface.withAlpha(alphaVal80),
                     ),
                   ),
                   onPressed: _signInWithGoogle,
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(
-                      color: theme.colorScheme.onSurface.withOpacity(0.3),
+                      color: theme.colorScheme.onSurface.withAlpha(alphaVal30),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     textStyle: const TextStyle(
@@ -283,8 +333,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: TextSpan(
                       text: 'Não tem uma conta? ',
                       style: TextStyle(
-                          color: theme.colorScheme.onBackground.withOpacity(
-                              0.8)),
+                        color: theme.colorScheme.onSurface.withAlpha(
+                            alphaVal80),
+                      ),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Registre-se',
