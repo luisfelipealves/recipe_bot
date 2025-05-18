@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "249725766801",
+    "project_id": "recipe-bot-ef534",
+    "storage_bucket": "recipe-bot-ef534.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249725766801:android:fb28c48f5d0a24a0b78330",
+        "android_client_info": {
+          "package_name": "com.luisfelipealves"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDqi1oYyB7oLO9Rqb2EMOXdm88T3sWqTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249725766801:android:245b83107193b382b78330",
+        "android_client_info": {
+          "package_name": "com.luisfelipealves.recipe_bot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDqi1oYyB7oLO9Rqb2EMOXdm88T3sWqTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249725766801:android:1d465a997ed36535b78330",
+        "android_client_info": {
+          "package_name": "com.luisfelipealves.recipebot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDqi1oYyB7oLO9Rqb2EMOXdm88T3sWqTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
