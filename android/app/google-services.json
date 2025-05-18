@@ -12,7 +12,20 @@
           "package_name": "com.luisfelipealves"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "249725766801-9jd7lvah7k1abv16ge9d093sqs669v66.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.luisfelipealves",
+            "certificate_hash": "8133e229ba6ff8ddf91db81c0bd161534c2dd696"
+          }
+        },
+        {
+          "client_id": "249725766801-cg70p1r947mia7ijprimfa70qhutjqnu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCDqi1oYyB7oLO9Rqb2EMOXdm88T3sWqTI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249725766801-cg70p1r947mia7ijprimfa70qhutjqnu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "249725766801-11lgeujhsujlsfe2gcupa11o0i7h91mr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.luisfelipealves.recipeBot"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +56,12 @@
           "package_name": "com.luisfelipealves.recipe_bot"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "249725766801-cg70p1r947mia7ijprimfa70qhutjqnu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCDqi1oYyB7oLO9Rqb2EMOXdm88T3sWqTI"
@@ -39,7 +69,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249725766801-cg70p1r947mia7ijprimfa70qhutjqnu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "249725766801-11lgeujhsujlsfe2gcupa11o0i7h91mr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.luisfelipealves.recipeBot"
+              }
+            }
+          ]
         }
       }
     },
@@ -50,7 +92,12 @@
           "package_name": "com.luisfelipealves.recipebot"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "249725766801-cg70p1r947mia7ijprimfa70qhutjqnu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCDqi1oYyB7oLO9Rqb2EMOXdm88T3sWqTI"
@@ -58,7 +105,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249725766801-cg70p1r947mia7ijprimfa70qhutjqnu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "249725766801-11lgeujhsujlsfe2gcupa11o0i7h91mr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.luisfelipealves.recipeBot"
+              }
+            }
+          ]
         }
       }
     }
