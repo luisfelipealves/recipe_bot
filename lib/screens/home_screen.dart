@@ -5,6 +5,13 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'login_screen.dart';
 import 'import_recipe_screen.dart';
+import '../widgets/recipe_list.dart';
+import '../widgets/empty_state_widget.dart'; // Importe o EmptyStateWidget
+import '../data/mock_recipes.dart';
+import '../models/recipe_model.dart';
+
+// import 'package:logger/logger.dart';
+// final logger = Logger();
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,6 +27,7 @@ class HomeScreen extends StatelessWidget {
             (Route<dynamic> route) => false,
       );
     } catch (e) {
+      // logger.e("Erro ao fazer logout", error: e, stackTrace: stackTrace);
       scaffoldMessenger.showSnackBar(
         SnackBar(content: Text('Erro ao fazer logout: ${e.toString()}')),
       );
@@ -34,6 +42,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Para testar o estado vazio:
+    // final List<Recipe> currentRecipes = [];
+    final List<Recipe> currentRecipes = mockRecipes; // Use para testar com receitas
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipe Bot'),
@@ -48,49 +60,51 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding( // Adiciona padding geral ao body
-        padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Alinha o conteúdo da Column à esquerda
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Título com Ícone
             Row(
               children: [
                 const Icon(
-                  Icons.menu_book, // Ícone de livro aberto,
-                  color: Colors.teal, // Cor do ícone
-                  size: 28.0, // Tamanho do ícone
-                  // A cor do ícone será herdada do tema, ou pode ser definida explicitamente
-                  // color: Theme.of(context).colorScheme.primary,
+                  Icons.menu_book,
+                  size: 28.0,
+                  color: Colors.teal,
                 ),
-                const SizedBox(width: 8.0), // Espaçamento entre ícone e texto
+                const SizedBox(width: 8.0),
                 Text(
                   'Meu Livro de Receitas',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 8.0), // Espaçamento entre o título e o subtítulo
-
-            // Subtítulo
+            const SizedBox(height: 8.0),
             Text(
               'Suas receitas salvas, ordenadas alfabeticamente. Clique para ver os detalhes ou adicione novas receitas.',
-              style: Theme.of(context).textTheme.bodyMedium,
-              // textAlign: TextAlign.start, // O Column com crossAxisAlignment.start já cuida disso
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyMedium,
             ),
-            const SizedBox(height: 20.0), // Espaçamento antes da próxima seção (lista de receitas)
-
-            // TODO: Aqui virá a lista de receitas
-            // Exemplo de placeholder se a lista estiver vazia:
-            // Expanded(
-            //   child: Center(
-            //     child: Text(
-            //       'Nenhuma receita cadastrada ainda.\nToque no botão "+" para adicionar sua primeira receita!',
-            //       textAlign: TextAlign.center,
-            //       style: Theme.of(context).textTheme.bodyLarge,
-            //     ),
-            //   ),
-            // ),
+            const SizedBox(height: 20.0),
+            Expanded(
+              child: currentRecipes.isEmpty
+                  ? EmptyStateWidget(
+                iconData: Icons.ramen_dining_outlined,
+                title: 'Seu Livro de Receitas Está Vazio',
+                message: 'Que tal adicionar sua primeira obra-prima culinária?',
+                actionButtonText: 'Adicionar Receita',
+                onActionButtonPressed: () =>
+                    _navigateToImportRecipeScreen(context),
+              )
+                  : RecipeList(
+                recipes: currentRecipes,
+              ),
+            ),
           ],
         ),
       ),
