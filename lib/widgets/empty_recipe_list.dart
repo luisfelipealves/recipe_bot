@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class EmptyStateWidget extends StatelessWidget {
+class EmptyRecipeListWidget extends StatelessWidget {
   final String title;
   final String message;
   final IconData iconData;
   final VoidCallback? onActionButtonPressed; // Callback para um botão de ação opcional
   final String? actionButtonText; // Texto para o botão de ação opcional
 
-  const EmptyStateWidget({
+  const EmptyRecipeListWidget({
     super.key,
     required this.title,
     required this.message,

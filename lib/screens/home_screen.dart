@@ -6,7 +6,7 @@ import '../services/auth_service.dart';
 import 'login_screen.dart';
 import 'import_recipe_screen.dart';
 import '../widgets/recipe_list.dart';
-import '../widgets/empty_state_widget.dart'; // Importe o EmptyStateWidget
+import '../widgets/empty_recipe_list.dart'; // Importe o EmptyStateWidget
 import '../data/mock_recipes.dart';
 import '../models/recipe_model.dart';
 
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20.0),
             Expanded(
               child: currentRecipes.isEmpty
-                  ? EmptyStateWidget(
+                  ? EmptyRecipeListWidget(
                 iconData: Icons.ramen_dining_outlined,
                 title: 'Seu Livro de Receitas Está Vazio',
                 message: 'Que tal adicionar sua primeira obra-prima culinária?',
