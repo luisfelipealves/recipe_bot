@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'login_screen.dart';
 import 'import_recipe_screen.dart';
-import '../widgets/recipe_list.dart'; // Importe o novo widget
-import '../data/mock_recipes.dart'; // Importe os dados mock
+import '../widgets/recipe_list.dart';
+import '../widgets/empty_state_widget.dart'; // Importe o EmptyStateWidget
+import '../data/mock_recipes.dart';
+import '../models/recipe_model.dart';
+
+// import 'package:logger/logger.dart';
+// final logger = Logger();
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,7 +26,8 @@ class HomeScreen extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const LoginScreen()),
             (Route<dynamic> route) => false,
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      // logger.e("Erro ao fazer logout", error: e, stackTrace: stackTrace);
       scaffoldMessenger.showSnackBar(
         SnackBar(content: Text('Erro ao fazer logout: ${e.toString()}')),
       );
@@ -36,6 +42,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Para testar o estado vazio:
+    // final List<Recipe> currentRecipes = [];
+    final List<Recipe> currentRecipes = mockRecipes; // Use para testar com receitas
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipe Bot'),
@@ -52,16 +62,15 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-        // Removido padding inferior para a lista preencher
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.menu_book,
                   size: 28.0,
-                  color: Colors.teal, // Cor teal no ícone
+                  color: Colors.teal,
                 ),
                 const SizedBox(width: 8.0),
                 Text(
@@ -83,9 +92,23 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20.0),
 
-            // Use o widget RecipeList aqui
-            Expanded( // Expanded é importante para que o ListView ocupe o espaço restante
-              child: RecipeList(recipes: mockRecipes),
+            // LÓGICA PARA MOSTRAR EMPTY STATE OU LISTA DE RECEITAS
+            Expanded(
+              child: currentRecipes.isEmpty
+                  ? EmptyStateWidget(
+                iconData: Icons.ramen_dining_outlined,
+                title: 'Seu Livro de Receitas Está Vazio',
+                message: 'Que tal adicionar sua primeira obra-prima culinária?',
+                // Se quiser um botão de ação aqui, que faz o mesmo que o FAB:
+                actionButtonText: 'Adicionar Receita',
+                onActionButtonPressed: () =>
+                    _navigateToImportRecipeScreen(context),
+              )
+                  : RecipeList(
+                recipes: currentRecipes,
+                // Se o RecipeList tivesse um botão interno de adicionar, você passaria a função aqui.
+                // Mas com o EmptyStateWidget tendo o seu, pode não ser necessário no RecipeList.
+              ),
             ),
           ],
         ),
