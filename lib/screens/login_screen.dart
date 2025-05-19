@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logging/logging.dart'; // Import logging
+import 'package:recipe_bot/screens/register_screen.dart';
 import '../services/auth_service.dart';
 import 'home_screen.dart';
 
@@ -115,14 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateToRegisterScreen() {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(builder: (context) => const RegisterScreen()),
-    // );
-    _log.info('Navigate to Register Screen (TODO) button pressed.');
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Navegar para tela de Registro (TODO)')),
-    );
-  }
+    _log.info('Navigating to Register Screen.');
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const RegisterScreen()),
+    );  }
 
   @override
   Widget build(BuildContext context) {
@@ -222,8 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         setState(() {
                           _isPasswordVisible = !_isPasswordVisible;
-                          _log.info(
-                              'Password visibility toggled to: $_isPasswordVisible');
+                          _log.info('Password visibility toggled to: $_isPasswordVisible');
                         });
                       },
                     ),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter/foundation.dart' show kIsWeb; // Para checagem web
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:logging/logging.dart'; // Para checagem web
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
