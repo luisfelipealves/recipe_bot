@@ -1,8 +1,7 @@
 // lib/widgets/recipe_list_item.dart
 import 'package:flutter/material.dart';
-import '../models/recipe_model.dart'; // Importa o modelo Recipe
-// Se você tiver uma tela de detalhes, importe-a também:
-// import '../screens/recipe_detail_screen.dart';
+import '../models/recipe_model.dart';
+import '../screens/recipe_detail_screen.dart'; // 1. Importe a nova tela
 
 class RecipeListItem extends StatelessWidget {
   final Recipe recipe;
@@ -27,7 +26,6 @@ class RecipeListItem extends StatelessWidget {
               recipe.imageUrl!,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                // Para consistência, podemos usar o mesmo ícone do else
                 return const SizedBox(
                   width: 60,
                   height: 60,
@@ -59,15 +57,13 @@ class RecipeListItem extends StatelessWidget {
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16.0),
         onTap: () {
-          print('Clicou em: ${recipe.title}');
-          // Navegação para a tela de detalhes da receita (exemplo)
-          // Se você tiver uma RecipeDetailScreen:
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => RecipeDetailScreen(recipe: recipe),
-          //   ),
-          // );
+          // 2. Navegue para RecipeDetailScreen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RecipeDetailScreen(recipe: recipe),
+            ),
+          );
         },
       ),
     );
