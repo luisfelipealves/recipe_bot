@@ -1,11 +1,7 @@
 // lib/screens/home_screen.dart
 import 'package:flutter/material.dart';
-
-// Se você não usa mais FirebaseAuth diretamente nesta tela APÓS remover os dados do usuário,
-// pode até remover o import abaixo, mas AuthService ainda pode depender dele.
 // import 'package:firebase_auth/firebase_auth.dart';
 
-// Ajuste os caminhos de importação conforme a estrutura do seu projeto
 import '../services/auth_service.dart';
 import 'login_screen.dart';
 import 'import_recipe_screen.dart';
@@ -14,15 +10,17 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   Future<void> _signOut(BuildContext context) async {
+    final navigator = Navigator.of(context);
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     try {
       await AuthService().signOut();
-      Navigator.of(context).pushAndRemoveUntil(
+      navigator.pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const LoginScreen()),
             (Route<dynamic> route) => false,
       );
     } catch (e) {
-      print("Erro ao fazer logout: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
+      scaffoldMessenger.showSnackBar(
         SnackBar(content: Text('Erro ao fazer logout: ${e.toString()}')),
       );
     }
@@ -36,9 +34,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Não precisamos mais de `final User? user = FirebaseAuth.instance.currentUser;`
-    // se não estamos exibindo os dados do usuário diretamente aqui.
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipe Bot'),
@@ -53,23 +48,48 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
+      body: Padding( // Adiciona padding geral ao body
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start, // Alinha o conteúdo da Column à esquerda
           children: <Widget>[
+            // Título com Ícone
+            Row(
+              children: [
+                const Icon(
+                  Icons.menu_book, // Ícone de livro aberto
+                  size: 28.0, // Tamanho do ícone
+                  // A cor do ícone será herdada do tema, ou pode ser definida explicitamente
+                  // color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 8.0), // Espaçamento entre ícone e texto
+                Text(
+                  'Meu Livro de Receitas',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ],
+            ),
+            const SizedBox(height: 8.0), // Espaçamento entre o título e o subtítulo
+
+            // Subtítulo
             Text(
-              'Meu Livro de Receitas',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headlineSmall,
+              'Suas receitas salvas, ordenadas alfabeticamente. Clique para ver os detalhes ou adicione novas receitas.',
+              style: Theme.of(context).textTheme.bodyMedium,
+              // textAlign: TextAlign.start, // O Column com crossAxisAlignment.start já cuida disso
             ),
-            // Seções de displayName e email do usuário foram removidas daqui.
-            const SizedBox(height: 20),
-            const Text(
-              'Aqui serão listadas suas receitas cadastradas.',
-              textAlign: TextAlign.center,
-            ),
+            const SizedBox(height: 20.0), // Espaçamento antes da próxima seção (lista de receitas)
+
+            // TODO: Aqui virá a lista de receitas
+            // Exemplo de placeholder se a lista estiver vazia:
+            // Expanded(
+            //   child: Center(
+            //     child: Text(
+            //       'Nenhuma receita cadastrada ainda.\nToque no botão "+" para adicionar sua primeira receita!',
+            //       textAlign: TextAlign.center,
+            //       style: Theme.of(context).textTheme.bodyLarge,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
