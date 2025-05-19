@@ -350,15 +350,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   // Logo ou Ícone
                   Icon(
-                    Icons.lock_open, // Exemplo de ícone
+                    Icons.menu_book_rounded,
                     size: 80,
                     color: theme.colorScheme.primary,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Bem-vindo de Volta!',
+                    'Seu livro de receitas digital.',
                     textAlign: TextAlign.center,
                     style: theme.textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  Text(
+                    'Simples, inteligente e delicioso.',
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.onSurface,
                     ),
