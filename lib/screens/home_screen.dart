@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'login_screen.dart';
 import 'import_recipe_screen.dart';
+import '../widgets/recipe_list.dart'; // Importe o novo widget
+import '../data/mock_recipes.dart'; // Importe os dados mock
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -48,49 +50,43 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding( // Adiciona padding geral ao body
-        padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+        // Removido padding inferior para a lista preencher
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Alinha o conteúdo da Column à esquerda
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Título com Ícone
             Row(
               children: [
-                const Icon(
-                  Icons.menu_book, // Ícone de livro aberto,
-                  color: Colors.teal, // Cor do ícone
-                  size: 28.0, // Tamanho do ícone
-                  // A cor do ícone será herdada do tema, ou pode ser definida explicitamente
-                  // color: Theme.of(context).colorScheme.primary,
+                Icon(
+                  Icons.menu_book,
+                  size: 28.0,
+                  color: Colors.teal, // Cor teal no ícone
                 ),
-                const SizedBox(width: 8.0), // Espaçamento entre ícone e texto
+                const SizedBox(width: 8.0),
                 Text(
                   'Meu Livro de Receitas',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 8.0), // Espaçamento entre o título e o subtítulo
-
-            // Subtítulo
+            const SizedBox(height: 8.0),
             Text(
               'Suas receitas salvas, ordenadas alfabeticamente. Clique para ver os detalhes ou adicione novas receitas.',
-              style: Theme.of(context).textTheme.bodyMedium,
-              // textAlign: TextAlign.start, // O Column com crossAxisAlignment.start já cuida disso
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyMedium,
             ),
-            const SizedBox(height: 20.0), // Espaçamento antes da próxima seção (lista de receitas)
+            const SizedBox(height: 20.0),
 
-            // TODO: Aqui virá a lista de receitas
-            // Exemplo de placeholder se a lista estiver vazia:
-            // Expanded(
-            //   child: Center(
-            //     child: Text(
-            //       'Nenhuma receita cadastrada ainda.\nToque no botão "+" para adicionar sua primeira receita!',
-            //       textAlign: TextAlign.center,
-            //       style: Theme.of(context).textTheme.bodyLarge,
-            //     ),
-            //   ),
-            // ),
+            // Use o widget RecipeList aqui
+            Expanded( // Expanded é importante para que o ListView ocupe o espaço restante
+              child: RecipeList(recipes: mockRecipes),
+            ),
           ],
         ),
       ),
