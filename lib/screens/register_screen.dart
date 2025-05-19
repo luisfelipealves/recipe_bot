@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart'; // Para FirebaseAuthException
 import 'package:logging/logging.dart';
 
 import '../services/auth_service.dart';
-import 'home_screen.dart'; // Para Logging
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -38,8 +37,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   // Método para navegar para HomeScreen ou LoginScreen após registro
   void _navigateToNextScreen() {
-    Navigator.of(context).pushReplacement(
-    MaterialPageRoute(builder: (context) => const HomeScreen()),);
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   Future<void> _registerWithEmailAndPassword() async {
