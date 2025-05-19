@@ -57,7 +57,8 @@ class HomeScreen extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  Icons.menu_book, // Ícone de livro aberto
+                  Icons.menu_book, // Ícone de livro aberto,
+                  color: Colors.teal, // Cor do ícone
                   size: 28.0, // Tamanho do ícone
                   // A cor do ícone será herdada do tema, ou pode ser definida explicitamente
                   // color: Theme.of(context).colorScheme.primary,
