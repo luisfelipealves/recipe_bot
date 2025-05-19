@@ -23,8 +23,9 @@ class RecipeDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Imagem da Receita (se houver)
-            if (recipe.imageUrl != null && recipe.imageUrl!.isNotEmpty)
+            // --- MODIFICAÇÃO AQUI ---
+            // Só exibe a seção da imagem se imageUrl não for nulo e não estiver vazio
+            if (recipe.imageUrl != null && recipe.imageUrl!.isNotEmpty) ...[
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: Image.network(
@@ -40,36 +41,19 @@ class RecipeDetailScreen extends StatelessWidget {
                     );
                   },
                   errorBuilder: (context, error, stackTrace) {
-                    return SizedBox(
-                      height: 250,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.broken_image, size: 50),
-                            const SizedBox(height: 8),
-                            Text('Imagem não disponível', style: Theme
-                                .of(context)
-                                .textTheme
-                                .bodySmall),
-                          ],
-                        ),
-                      ),
-                    );
+                    // Se houver um erro ao carregar uma URL válida,
+                    // podemos optar por não mostrar nada ou um ícone discreto.
+                    // Por ora, vamos ocultar também em caso de erro de carregamento,
+                    // seguindo a lógica de "não mostrar se não estiver disponível".
+                    return const SizedBox.shrink(); // Não ocupa espaço
                   },
                 ),
               ),
-            if (recipe.imageUrl != null && recipe.imageUrl!.isNotEmpty)
               const SizedBox(height: 20.0),
+              // Espaçamento após a imagem, se ela for exibida
+            ],
+            // --- FIM DA MODIFICAÇÃO ---
 
-            // Título da Receita (redundante se já estiver no AppBar, mas pode ser estilizado aqui)
-            // Text(
-            //   recipe.title,
-            //   style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
-            // ),
-            // const SizedBox(height: 8.0),
-
-            // Descrição
             Text(
               recipe.description,
               style: Theme
@@ -79,7 +63,6 @@ class RecipeDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
 
-            // Tempo de Preparo
             Row(
               children: [
                 const Icon(
@@ -96,7 +79,6 @@ class RecipeDetailScreen extends StatelessWidget {
             ),
             const Divider(height: 32.0),
 
-            // Seção de Ingredientes
             Text(
               'Ingredientes',
               style: Theme
@@ -109,7 +91,6 @@ class RecipeDetailScreen extends StatelessWidget {
             _buildIngredientList(recipe.ingredients),
             const Divider(height: 32.0),
 
-            // Seção de Instruções
             Text(
               'Modo de Preparo',
               style: Theme
@@ -121,7 +102,6 @@ class RecipeDetailScreen extends StatelessWidget {
             const SizedBox(height: 12.0),
             _buildInstructionList(recipe.instructions),
             const SizedBox(height: 20.0),
-            // Espaço no final
           ],
         ),
       ),
@@ -132,9 +112,6 @@ class RecipeDetailScreen extends StatelessWidget {
     if (ingredients.isEmpty) {
       return const Text('Nenhum ingrediente listado.');
     }
-    // Usando ListView.builder dentro de Column pode causar problemas de altura.
-    // Para listas pequenas e não roláveis dentro de outra rolagem, Column é aceitável.
-    // Se a lista de ingredientes for muito longa, considere outras abordagens.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: ingredients.map((ingredient) {
@@ -164,9 +141,7 @@ class RecipeDetailScreen extends StatelessWidget {
     }
     return ListView.separated(
       shrinkWrap: true,
-      // Importante para ListView dentro de SingleChildScrollView
       physics: const NeverScrollableScrollPhysics(),
-      // Desabilita rolagem própria do ListView
       itemCount: instructions.length,
       itemBuilder: (context, index) {
         final instruction = instructions[index];
