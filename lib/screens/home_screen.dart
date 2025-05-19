@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
         MaterialPageRoute(builder: (context) => const LoginScreen()),
             (Route<dynamic> route) => false,
       );
-    } catch (e, stackTrace) {
+    } catch (e) {
       // logger.e("Erro ao fazer logout", error: e, stackTrace: stackTrace);
       scaffoldMessenger.showSnackBar(
         SnackBar(content: Text('Erro ao fazer logout: ${e.toString()}')),
@@ -91,23 +91,18 @@ class HomeScreen extends StatelessWidget {
                   .bodyMedium,
             ),
             const SizedBox(height: 20.0),
-
-            // LÓGICA PARA MOSTRAR EMPTY STATE OU LISTA DE RECEITAS
             Expanded(
               child: currentRecipes.isEmpty
                   ? EmptyStateWidget(
                 iconData: Icons.ramen_dining_outlined,
                 title: 'Seu Livro de Receitas Está Vazio',
                 message: 'Que tal adicionar sua primeira obra-prima culinária?',
-                // Se quiser um botão de ação aqui, que faz o mesmo que o FAB:
                 actionButtonText: 'Adicionar Receita',
                 onActionButtonPressed: () =>
                     _navigateToImportRecipeScreen(context),
               )
                   : RecipeList(
                 recipes: currentRecipes,
-                // Se o RecipeList tivesse um botão interno de adicionar, você passaria a função aqui.
-                // Mas com o EmptyStateWidget tendo o seu, pode não ser necessário no RecipeList.
               ),
             ),
           ],
