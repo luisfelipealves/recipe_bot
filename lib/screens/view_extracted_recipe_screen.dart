@@ -119,7 +119,7 @@ class ViewExtractedRecipeScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final instruction = recipe.instructions[index];
                   return ListTile(
-                    leading: CircleAvatar(child: Text('${instruction.stepNumber}')),
+                    leading: CircleAvatar(child: Text('${instruction.order}')),
                     title: Text(instruction.description),
                   );
                 },
