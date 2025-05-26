@@ -1,9 +1,9 @@
 // lib/services/recipe_extraction_service.dart
 import 'dart:async';
 
-import 'package:recipe_app/models/ingredient_model.dart';
-import 'package:recipe_app/models/instruction_model.dart';
-import 'package:recipe_app/models/recipe_model.dart';
+import 'package:recipe_bot/models/ingredient_model.dart';
+import 'package:recipe_bot/models/instruction_model.dart';
+import 'package:recipe_bot/models/recipe_model.dart';
 
 Future<Recipe> extractRecipeFromUrl(String url) async {
   // Simulate network delay

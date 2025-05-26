@@ -1,6 +1,6 @@
 // lib/screens/view_extracted_recipe_screen.dart
 import 'package:flutter/material.dart';
-import 'package:recipe_app/models/recipe_model.dart';
+import 'package:recipe_bot/models/recipe_model.dart';
 // Ingredient and Instruction models are implicitly available through recipe_model.dart
 
 class ViewExtractedRecipeScreen extends StatelessWidget {
