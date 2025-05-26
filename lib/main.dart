@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_bot/screens/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:recipe_bot/services/firebase_options.dart'; // Gerado pelo FlutterFire CLI
+import 'package:recipe_bot/widgets/auth_wrapper.dart';
+import 'package:recipe_bot/screens/login_screen.dart';
 
 // Ajuste 'package:recipe_bot/screens/home_screen.dart'
 // para o caminho correto da sua HomeScreen se for diferente.
@@ -9,19 +13,41 @@ import 'package:recipe_bot/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Se usar Firebase:
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-  runApp(const MyApp());
+  bool firebaseInitializationFailed = false;
+  try {
+    // Se usar Firebase:
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print('Firebase initialization failed: $e');
+    firebaseInitializationFailed = true;
+  }
+  runApp(MyApp(firebaseInitializationFailed: firebaseInitializationFailed));
 }
 
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool firebaseInitializationFailed;
+
+  const MyApp({super.key, required this.firebaseInitializationFailed});
 
   @override
   Widget build(BuildContext context) {
+    if (firebaseInitializationFailed) {
+      return MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Text(
+              'Failed to initialize Firebase. Please try again later.',
+              style: TextStyle(color: Colors.red, fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
+
     return MaterialApp(
       title: 'Recipe Bot',
       theme: ThemeData(
@@ -51,7 +77,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: const HomeScreen(),
+      home: const AuthWrapper(),
       // routes: {
       //   '/': (context) => const LoginScreen(), // Exemplo
       //   HomeScreen.routeName: (context) => const HomeScreen(), // Exemplo
