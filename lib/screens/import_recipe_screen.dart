@@ -1,7 +1,7 @@
 // lib/screens/import_recipe_screen.dart
 import 'package:flutter/material.dart';
 import 'package:recipe_bot/services/recipe_extraction_service.dart';
-import 'package:recipe_app/models/recipe_model.dart';
+import 'package:recipe_bot/models/recipe_model.dart';
 import 'package:recipe_bot/screens/view_extracted_recipe_screen.dart';
 
 class ImportRecipeScreen extends StatefulWidget {
