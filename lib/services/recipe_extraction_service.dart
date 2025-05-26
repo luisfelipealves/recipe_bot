@@ -12,21 +12,21 @@ Future<Recipe> extractRecipeFromUrl(String url) async {
   if (url.toLowerCase().contains('recipe')) {
     // Create mock ingredients
     final mockIngredients = [
-      Ingredient(name: 'All-purpose flour', quantity: '2 cups'),
-      Ingredient(name: 'Sugar', quantity: '1 cup'),
-      Ingredient(name: 'Eggs', quantity: '3'),
-      Ingredient(name: 'Milk', quantity: '1/2 cup'),
-      Ingredient(name: 'Butter', quantity: '100g', unit: 'grams'),
+      Ingredient(order: 1, name: 'All-purpose flour', quantity: '2 cups'),
+      Ingredient(order: 2, name: 'Sugar', quantity: '1 cup'),
+      Ingredient(order: 3, name: 'Eggs', quantity: '3'),
+      Ingredient(order: 4, name: 'Milk', quantity: '1/2 cup'),
+      Ingredient(order: 5, name: 'Butter', quantity: '100g'),
     ];
 
     // Create mock instructions
     final mockInstructions = [
-      Instruction(stepNumber: 1, description: 'Preheat oven to 180°C (350°F).'),
-      Instruction(stepNumber: 2, description: 'In a large bowl, mix flour and sugar.'),
-      Instruction(stepNumber: 3, description: 'Add eggs one at a time, beating well after each addition.'),
-      Instruction(stepNumber: 4, description: 'Gradually add milk and melted butter, mixing until smooth.'),
-      Instruction(stepNumber: 5, description: 'Pour batter into a greased baking pan.'),
-      Instruction(stepNumber: 6, description: 'Bake for 30-35 minutes, or until a toothpick inserted into the center comes out clean.'),
+      Instruction(order: 1, description: 'Preheat oven to 180°C (350°F).'),
+      Instruction(order: 2, description: 'In a large bowl, mix flour and sugar.'),
+      Instruction(order: 3, description: 'Add eggs one at a time, beating well after each addition.'),
+      Instruction(order: 4, description: 'Gradually add milk and melted butter, mixing until smooth.'),
+      Instruction(order: 5, description: 'Pour batter into a greased baking pan.'),
+      Instruction(order: 6, description: 'Bake for 30-35 minutes, or until a toothpick inserted into the center comes out clean.'),
     ];
 
     // Create and return a dummy Recipe object
