@@ -97,7 +97,7 @@ class ViewExtractedRecipeScreen extends StatelessWidget {
                   return ListTile(
                     leading: CircleAvatar(child: Text('${index + 1}')),
                     title: Text('${ingredient.quantity} ${ingredient.name}'),
-                    subtitle: ingredient.notes != null && ingredient.notes!.isNotEmpty ? Text(ingredient.notes!) : null,
+                    subtitle: null,
                   );
                 },
               )
