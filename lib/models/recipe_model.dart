@@ -11,6 +11,11 @@ class Recipe {
   final String? imageUrl;
   final List<Ingredient> ingredients;
   final List<Instruction> instructions;
+  final String? sourceUrl;
+  final int? servings;
+  final String? notes;
+  final List<String>? tags;
+  final bool isFavorite; // Default this in constructor
 
   Recipe({
     required this.id,
@@ -20,5 +25,10 @@ class Recipe {
     this.imageUrl,
     required this.ingredients,
     required this.instructions,
+    this.sourceUrl,
+    this.servings,
+    this.notes,
+    this.tags,
+    this.isFavorite = false, // Default value
   });
 }
